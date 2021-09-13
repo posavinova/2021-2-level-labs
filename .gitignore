@@ -1,3 +1,4 @@
 # dev tools
 *.idea
 .vscode
+venv

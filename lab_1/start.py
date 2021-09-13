@@ -2,23 +2,24 @@
 Language detection starter
 """
 
+import os
+
+PATH_TO_LAB_FOLDER = os.path.dirname(os.path.abspath(__file__))
+PATH_TO_TEXTS_FOLDER = os.path.join(PATH_TO_LAB_FOLDER, 'texts')
 
 if __name__ == '__main__':
 
-    english_text = """A man walks into a bar and orders a glass of water. 
-                      The bartender points a gun at him and the man thanks him and leaves.
-                      Why did the man thank the bartender?"""
+    with open(os.path.join(PATH_TO_TEXTS_FOLDER, 'en.txt'), 'r', encoding='utf-8') as file_to_read:
+        en_text = file_to_read.read()
 
-    german_text = """Stell dir vor, du bist der Kapitän eines Frachtschiffes, das 30 Meter lang und 5 Meter breit ist.
-                     Voll beladen hat es einen Tiefgang von 2 Metern, nicht beladen nur von einem Meter. 
-                     Seine Höchstgeschwindigkeit betägt 18 Knoten. Wie alt ist der Kapitän?"""
+    with open(os.path.join(PATH_TO_TEXTS_FOLDER, 'de.txt'), 'r', encoding='utf-8') as file_to_read:
+        de_text = file_to_read.read()
 
-    unknown_text = """A man is lying in his bed, trying to sleep. 
-                      He picks up the phone and makes a call.
-                      He waits for a while and hangs up before anyone could answer the phone.
-                      Then he sleeps peacefully."""
+    with open(os.path.join(PATH_TO_TEXTS_FOLDER, 'unknown.txt'), 'r', encoding='utf-8') as \
+            file_to_read:
+        unknown_text = file_to_read.read()
 
-    expected = 'en'
+    EXPECTED = 'en'
     RESULT = ''
     # DO NOT REMOVE NEXT LINE - KEEP IT INTENTIONALLY LAST
     assert RESULT, 'Detection not working'
