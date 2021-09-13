@@ -1,0 +1,10 @@
+tokenize_test.py
+remove_stop_words_test.py
+calculate_frequencies_test.py
+get_top_n_words_test.py
+create_language_profile_test.py
+compare_profiles_test.py
+detect_language_test.py
+compare_profiles_advanced_test.py
+detect_language_advanced_test.py
+load_profile_test.py
