@@ -41,13 +41,13 @@ if __name__ == "__main__":
     )
 
     de_profile = main.load_profile(
-        "/home/polina/PycharmProjects/2021-2-level-labs/lab_1/profiles/de.json"
+        os.path.abspath("de.json")
     )
     en_profile = main.load_profile(
-        "/home/polina/PycharmProjects/2021-2-level-labs/lab_1/profiles/en.json"
+        os.path.abspath("en.json")
     )
     la_profile = main.load_profile(
-        "/home/polina/PycharmProjects/2021-2-level-labs/lab_1/profiles/la.json"
+        os.path.abspath("la.json")
     )
 
     detection_from_profiles = main.detect_language_advanced(
