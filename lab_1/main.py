@@ -25,8 +25,7 @@ def tokenize(text: str) -> Optional[list]:
             .split()
         )
         return tokenized
-    else:
-        return None
+    return None
 
 
 def remove_stop_words(tokens: list, stop_words: list) -> Optional[list]:
@@ -43,8 +42,7 @@ def remove_stop_words(tokens: list, stop_words: list) -> Optional[list]:
     ):
         cleaned = [word for word in tokens if word not in stop_words]
         return cleaned
-    else:
-        return None
+    return None
 
 
 def calculate_frequencies(tokens: list) -> Optional[dict]:
@@ -58,8 +56,7 @@ def calculate_frequencies(tokens: list) -> Optional[dict]:
         for word in tokens:
             freq_dict[word] = tokens.count(word)
         return freq_dict
-    else:
-        return None
+    return None
 
 
 def get_top_n_words(freq_dict: dict, top_n: int) -> Optional[list]:
@@ -82,10 +79,8 @@ def get_top_n_words(freq_dict: dict, top_n: int) -> Optional[list]:
         ]
         if top_n <= len(sorted_dict):
             return sorted_dict[:top_n]
-        else:
-            return sorted_dict
-    else:
-        return None
+        return sorted_dict
+    return None
 
 
 def create_language_profile(
@@ -108,8 +103,7 @@ def create_language_profile(
         freq_dict = calculate_frequencies(cleared)
         lang_profile = {"name": language, "freq": freq_dict, "n_words": len(freq_dict)}
         return lang_profile
-    else:
-        return None
+    return None
 
 
 def compare_profiles(
@@ -129,11 +123,11 @@ def compare_profiles(
     ):
         top_1 = get_top_n_words(unknown_profile.get("freq"), top_n)
         top_2 = get_top_n_words(profile_to_compare.get("freq"), top_n)
-        if (top_1 and top_2) is not None:
+        if top_1 and top_2:
             common = set(top_1).intersection(set(top_2))
-            return round(len(common) / len(top_2), 2)
-    else:
-        return None
+            score = round(len(common) / len(top_2), 2)
+            return score
+    return None
 
 
 def detect_language(
@@ -156,8 +150,7 @@ def detect_language(
         match_2 = compare_profiles(profile_2, unknown_profile, top_n)
         match = max([(match_1, profile_1["name"]), (match_2, profile_2["name"])])[1]
         return match
-    else:
-        return None
+    return None
 
 
 def compare_profiles_advanced(
@@ -178,7 +171,7 @@ def compare_profiles_advanced(
     ):
         unk_top = get_top_n_words(unknown_profile.get("freq"), top_n)
         check_top = get_top_n_words(profile_to_compare.get("freq"), top_n)
-        if (unk_top and check_top) is not None:
+        if unk_top and check_top:
             common = [token for token in check_top if token in unk_top]
             score = len(common) / len(check_top)
             sorted_common = sorted(common)
@@ -196,8 +189,8 @@ def compare_profiles_advanced(
                 "sorted_common": sorted_common,
             }
             return comparison
-    else:
         return None
+    return None
 
 
 def detect_language_advanced(
@@ -229,13 +222,11 @@ def detect_language_advanced(
                 reverse=True,
             )
             if match:
-                return match[0]["name"]
-            else:
-                return None
-        else:
+                result = match[0]["name"]
+                return result
             return None
-    else:
         return None
+    return None
 
 
 def load_profile(path_to_file: str) -> Optional[dict]:
@@ -250,12 +241,9 @@ def load_profile(path_to_file: str) -> Optional[dict]:
                 file = json.load(profile)
                 if file:
                     return file
-                else:
-                    return None
-        else:
-            return None
-    else:
+                return None
         return None
+    return None
 
 
 def save_profile(profile: dict) -> int:
@@ -265,20 +253,20 @@ def save_profile(profile: dict) -> int:
     :return: 0 if everything is ok, 1 if not
     """
     if isinstance(profile, dict):
-        pass
-    else:
+        if (
+            "name" in profile.keys()
+            and "freq" in profile.keys()
+            and "n_words" in profile.keys()
+        ):
+            if (
+                isinstance(profile["name"], str)
+                and isinstance(profile["freq"], dict)
+                and isinstance(profile["n_words"], int)
+            ):
+                path_to_file = f'{profile["name"]}.json'
+                with open(path_to_file, mode="w", encoding="utf-8") as file:
+                    json.dump(profile, file)
+                    return 0
+            return 1
         return 1
-    if (
-        "name" in profile.keys()
-        and "freq" in profile.keys()
-        and "n_words" in profile.keys()
-        and isinstance(profile["name"], str)
-        and isinstance(profile["freq"], dict)
-        and isinstance(profile["n_words"], int)
-    ):
-        path_to_file = f'{profile["name"]}.json'
-        with open(path_to_file, mode="w", encoding="utf-8") as file:
-            json.dump(profile, file)
-            return 0
-    else:
-        return 1
+    return 1
