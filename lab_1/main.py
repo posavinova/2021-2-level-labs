@@ -5,7 +5,6 @@ Language detection
 
 
 import json
-import re
 
 from os.path import exists
 from typing import Optional
@@ -218,18 +217,21 @@ def detect_language_advanced(
         and isinstance(languages, list)
         and isinstance(top_n, int)
     ):
-        lang_match = [
-            compare_profiles_advanced(unknown_profile, profile, top_n)
-            for profile in profiles
-            if profile["name"] in languages or not languages
-        ]
-        match = sorted(
-            sorted(lang_match, key=lambda profile: profile["name"]),
-            key=lambda profile: profile["score"],
-            reverse=True,
-        )
-        if match:
-            return match[0]["name"]
+        if profiles:
+            lang_match = [
+                compare_profiles_advanced(unknown_profile, profile, top_n)
+                for profile in profiles
+                if profile["name"] in languages or not languages
+            ]
+            match = sorted(
+                sorted(lang_match, key=lambda profile: profile["name"]),
+                key=lambda profile: profile["score"],
+                reverse=True,
+            )
+            if match:
+                return match[0]["name"]
+            else:
+                return None
         else:
             return None
     else:

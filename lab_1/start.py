@@ -7,6 +7,7 @@ import main
 
 PATH_TO_LAB_FOLDER = os.path.dirname(os.path.abspath(__file__))
 PATH_TO_TEXTS_FOLDER = os.path.join(PATH_TO_LAB_FOLDER, "texts")
+PATH_TO_LANG_PROFILES = os.path.join(PATH_TO_LAB_FOLDER, "profiles")
 
 if __name__ == "__main__":
 
@@ -31,7 +32,7 @@ if __name__ == "__main__":
         unknown_text = file_to_read.read()
 
     unk_profile_test = main.create_language_profile("unk", unknown_text, [])
-    main.save_profile(unk_profile_test)
+    # main.save_profile(unk_profile_test)
     en_profile_test = main.create_language_profile("en", en_text, ["a", "an", "the"])
     de_profile_test = main.create_language_profile("de", de_text, [])
     la_profile_test = main.create_language_profile("la", la_text, [])
@@ -41,19 +42,19 @@ if __name__ == "__main__":
     )
 
     de_profile = main.load_profile(
-        os.path.abspath("de.json")
+        os.path.join(PATH_TO_LANG_PROFILES, "de.json")
     )
     en_profile = main.load_profile(
-        os.path.abspath("en.json")
+        os.path.join(PATH_TO_LANG_PROFILES, "en.json")
     )
     la_profile = main.load_profile(
-        os.path.abspath("la.json")
+        os.path.join(PATH_TO_LANG_PROFILES, "la.json")
     )
 
+    profiles = [de_profile, en_profile, la_profile]
     detection_from_profiles = main.detect_language_advanced(
-        unk_profile_test, [de_profile, en_profile, la_profile], ["la", "de"], 10
+        unk_profile_test, profiles, ["la", "de"], 10
     )
-
     print(
         f"1. Detecting language from scratch: it is most likely to be {detection_from_scratch}."
     )
