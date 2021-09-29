@@ -18,7 +18,11 @@ def tokenize(text: str) -> Optional[list]:
     """
     if not isinstance(text, str):
         return None
-    tokenized = ("".join([char for char in text if char.isalpha() or char.isspace()]).lower().split())
+    tokenized = (
+        "".join([char for char in text if char.isalpha() or char.isspace()])
+        .lower()
+        .split()
+    )
     return tokenized
 
 

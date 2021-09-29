@@ -45,9 +45,12 @@ if __name__ == "__main__":
     la_profile = main.load_profile(os.path.join(PATH_TO_LANG_PROFILES, "la.json"))
 
     profiles = [de_profile, en_profile, la_profile]
-    detection_from_profiles = main.detect_language_advanced(unk_profile_test, profiles, ["la", "de", "en"], 5)
-
-    print(f"1. Detecting language from scratch: {detection_from_scratch}, from profiles: {detection_from_profiles}.")
+    detection_from_profiles = main.detect_language_advanced(
+        unk_profile_test,
+        profiles,
+        ["la", "de", "en"],
+        5
+    )
 
     EXPECTED = "en"
     RESULT = detection_from_profiles
