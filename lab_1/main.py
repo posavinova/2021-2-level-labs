@@ -109,10 +109,10 @@ def compare_profiles(
             or not isinstance(profile_to_compare, dict)
             or not isinstance(top_n, int)):
         return None
-    top_1 = get_top_n_words(unknown_profile["freq"], top_n)
-    top_2 = get_top_n_words(profile_to_compare["freq"], top_n)
-    common = set(top_1).intersection(set(top_2))
-    score = round(len(common) / len(top_2), 2)
+    unk_top = get_top_n_words(unknown_profile["freq"], top_n)
+    check_top = get_top_n_words(profile_to_compare["freq"], top_n)
+    common = set(unk_top).intersection(set(check_top))
+    score = round(len(common) / len(check_top), 2)
     return score
 
 
@@ -131,9 +131,9 @@ def detect_language(
             or not isinstance(profile_1, dict)
             or not isinstance(profile_2, dict)):
         return None
-    match_1 = compare_profiles(profile_1, unknown_profile, top_n)
-    match_2 = compare_profiles(profile_2, unknown_profile, top_n)
-    if match_1 > match_2:
+    match_one = compare_profiles(profile_1, unknown_profile, top_n)
+    match_two = compare_profiles(profile_2, unknown_profile, top_n)
+    if match_one > match_two:
         match = profile_1["name"]
         return match
     match = profile_2["name"]
