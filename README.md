@@ -1,5 +1,7 @@
 # Лабораторные работы для 2-го курса ФПЛ (2021/2022)
 
+[![Coverage Status](https://coveralls.io/repos/github/fipl-hse/2021-2-level-labs/badge.svg?branch=main)](https://coveralls.io/github/fipl-hse/2021-2-level-labs?branch=main)
+
 В рамках предмета 
 ["Программирование для лингвистов"](https://www.hse.ru/edu/courses/476645685) 
 в НИУ ВШЭ - Нижний Новгород.
@@ -26,6 +28,7 @@
 |3.09.2021|Знакомство.|Как Python запускает программы? [Листинг кода](./seminars/09.03.2021/practice_1.py)|
 |10.09.2021|Язык программирования Python. Историческая справка. Преимущества и недостатки языка. Виртуальная машина.|Что такое git? [Инструкции по настройке](./seminars/09.10.2021/practice_2.md)|
 |17.09.2021| Типы данных. Числа. Введение в строки: строка - последовательность.| Числа. Срезы. [Листинг кода](./seminars/09.17.2021/practice_3.py)|
+|24.09.2021| Строки как последовательности, штурм задачи про поиск вхождений строки| Строки. [Листинг кода](./seminars/09.24.2021/practice_4.py)|
 
 ## Литература
 
@@ -34,9 +37,9 @@
 1. Mark Lutz. 
    [Learning Python](https://www.amazon.com/Learning-Python-5th-Mark-Lutz/dp/1449355730).
 2. Хирьянов Тимофей Фёдорович. Видеолекции. 
-   [Практика программирования на Python 3](https://www.youtube.com/watch?v=fgf57Sa5A-A&list=PLRDzFCPr95fLuusPXwvOPgXzBL3ZTzybY) 
+   [Практика программирования на Python 3](https://www.youtube.com/watch?v=fgf57Sa5A-A&list=PLRDzFCPr95fLuusPXwvOPgXzBL3ZTzybY).
 3. Хирьянов Тимофей Фёдорович. Видеолекции. 
-   [Алгоритмы и структуры данных на Python 3](https://www.youtube.com/watch?v=KdZ4HF1SrFs&list=PLRDzFCPr95fK7tr47883DFUbm4GeOjjc0)
+   [Алгоритмы и структуры данных на Python 3](https://www.youtube.com/watch?v=KdZ4HF1SrFs&list=PLRDzFCPr95fK7tr47883DFUbm4GeOjjc0).
 4. [Official Python 3 documentation](https://docs.python.org/3/).
 
 ### Продвинутый уровень
