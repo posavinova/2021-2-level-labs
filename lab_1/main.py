@@ -5,13 +5,8 @@ Language detection
 import json
 from os.path import exists
 
-import json
 
-from os.path import exists
-from typing import Optional
-
-
-def tokenize(text: str) -> Optional[list]:
+def tokenize(text: str) -> list or None:
     """
     Splits a text into tokens, converts the tokens into lowercase,
     removes punctuation and other symbols from words
@@ -30,7 +25,7 @@ def tokenize(text: str) -> Optional[list]:
     return tokens
 
 
-def remove_stop_words(tokens: list, stop_words: list) -> Optional[list]:
+def remove_stop_words(tokens: list, stop_words: list) -> list or None:
     """
     Removes stop words
     :param tokens: a list of tokens
@@ -46,7 +41,7 @@ def remove_stop_words(tokens: list, stop_words: list) -> Optional[list]:
     return new_tokens
 
 
-def calculate_frequencies(tokens: list) -> Optional[dict]:
+def calculate_frequencies(tokens: list) -> dict or None:
     """
     Calculates frequencies of given tokens
     :param tokens: a list of tokens
@@ -66,7 +61,7 @@ def calculate_frequencies(tokens: list) -> Optional[dict]:
     return frequency_dictionary
 
 
-def get_top_n_words(freq_dict: dict, top_n: int) -> Optional[list]:
+def get_top_n_words(freq_dict: dict, top_n: int) -> list or None:
     """
     Returns the most common words
     :param freq_dict: a dictionary with frequencies
@@ -80,9 +75,7 @@ def get_top_n_words(freq_dict: dict, top_n: int) -> Optional[list]:
     return top_n_words
 
 
-def create_language_profile(
-        language: str, text: str, stop_words: list
-) -> Optional[dict]:
+def create_language_profile(language: str, text: str, stop_words: list) -> dict or None:
     """
     Creates a language profile
     :param language: a language
@@ -104,9 +97,7 @@ def create_language_profile(
     return {"name": language, "freq": frequency_dictionary, "n_words": n_words}
 
 
-def compare_profiles(
-        unknown_profile: dict, profile_to_compare: dict, top_n: int
-) -> Optional[float]:
+def compare_profiles(unknown_profile: dict, profile_to_compare: dict, top_n: int) -> float or None:
     """
     Compares profiles and calculates the distance using top n words
     :param unknown_profile: a dictionary
