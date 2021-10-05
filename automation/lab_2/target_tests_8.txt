@@ -1,0 +1,8 @@
+get_freq_dict_test.py
+get_language_profiles_test.py
+get_language_features_test.py
+get_text_vector_test.py
+calculate_distance_test.py
+predict_language_score_test.py
+calculate_distance_manhattan_test.py
+predict_language_knn_test.py

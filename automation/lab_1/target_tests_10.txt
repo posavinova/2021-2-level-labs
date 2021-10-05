@@ -8,3 +8,4 @@ detect_language_test.py
 compare_profiles_advanced_test.py
 detect_language_advanced_test.py
 load_profile_test.py
+save_profile_test.py
