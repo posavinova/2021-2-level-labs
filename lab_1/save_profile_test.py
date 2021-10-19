@@ -36,3 +36,17 @@ class SaveProfileTest(unittest.TestCase):
         for bad_input in bad_inputs:
             actual = save_profile(bad_input)
             self.assertEqual(expected, actual)
+
+    def test_save_profile_bad_input_complex(self):
+        """
+        Bad input complex scenario
+        """
+        expected = 1
+
+        bad_inputs = ['goodbye', {}, None, 9, 9.34, True, [None], []]
+        for index in range(len(bad_inputs) - 2):
+            profile = {'name': bad_inputs[index],
+                       'freq': bad_inputs[index+1],
+                       'n_words': bad_inputs[index+2]}
+        actual = save_profile(profile)
+        self.assertEqual(expected, actual)

@@ -28,6 +28,8 @@ jobs:
             console.log(`##[set-output name=pr_remote_url;]${prRemoteUrl}`);
       - uses: actions/checkout@v2
       - name: Merge upstream
+        env:
+          AUTH: ${{ secrets.AUTH_TOKEN }}
         id: update
         run: |
           # Determine whether force update is needed
@@ -38,7 +40,7 @@ jobs:
           fi
 
           chmod +x automation/github/update-fork.sh
-          automation/github/update-fork.sh --URL ${{ steps.fetch_remote_url.outputs.pr_remote_url }} --USER $GITHUB_ACTOR --FORCE $FORCE
+          automation/github/update-fork.sh --URL ${{ steps.fetch_remote_url.outputs.pr_remote_url }} --USER WhiteJaeger --FORCE $FORCE --AUTH "$AUTH_TOKEN"
 
       - name: Report on update
         uses: actions/github-script@v3

@@ -56,6 +56,27 @@ class DetectLanguageTest(unittest.TestCase):
         actual = detect_language(unknown_profile, en_profile, de_profile, 2)
         self.assertEqual(expected, actual)
 
+    def test_detect_language_alphabetical(self):
+        """
+        Detect language when scores are the same
+        """
+
+        unknown_profile = {'name': 'unk',
+                           'freq': {'computer': 5, 'the': 2, 'world': 1},
+                           'n_words': 3}
+
+        en_profile = {'name': 'en',
+                      'freq': {'computer': 2, 'she': 1, 'woman': 1},
+                      'n_words': 3}
+
+        de_profile = {'name': 'de',
+                      'freq': {'sie': 3, 'haben': 1, 'viel': 1, 'computer': 2},
+                      'n_words': 4}
+
+        expected = de_profile['name']
+        actual = detect_language(unknown_profile, en_profile, de_profile, 2)
+        self.assertEqual(expected, actual)
+
     def test_detect_language_bad_input(self):
         """
         Bad input scenario
