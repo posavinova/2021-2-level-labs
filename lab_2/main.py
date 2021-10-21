@@ -200,9 +200,8 @@ def get_sparse_vector(original_text: list, language_profiles: dict) -> list or N
             text_vector.append(max(frequencies))
         else:
             text_vector.append(0)
-    if text_vector:
-        sparse_vector = [[index, value] for index, value in enumerate(text_vector) if value != 0]
-        return sparse_vector
+    sparse_vector = [[index, value] for index, value in enumerate(text_vector) if value != 0]
+    return sparse_vector
 
 
 def calculate_distance_sparse(unknown_text_vector: list,
