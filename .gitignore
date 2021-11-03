@@ -3,3 +3,5 @@
 .vscode
 venv
 .DS_Store
+lab_3/profiles/
+__pycache__/
