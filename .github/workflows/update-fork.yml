@@ -8,7 +8,7 @@ jobs:
   sync:
 
     name: Update PR Fork on PR Comment
-    if: github.event.issue.pull_request != '' && (contains(github.event.comment.body, '/update') || contains(github.event.comment.body, '/update:force'))
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/update')
     runs-on: ubuntu-latest
 
     steps:
@@ -32,15 +32,19 @@ jobs:
           AUTH: ${{ secrets.AUTH_TOKEN }}
         id: update
         run: |
-          # Determine whether force update is needed
-          FORCE=0
+          # Determine what strategy should be used
+          STRATEGY=get_new
           COMMENT="${{ github.event.comment.body }}"
-          if [[ "${COMMENT}" == *"force"* ]]; then
-            FORCE=1
+          if [[ "${COMMENT}" == *"get_new"* ]]; then
+            STRATEGY=get_new
+          elif [[ "${COMMENT}" == *"keep_upstream"* ]]; then
+            STRATEGY=keep_upstream
+          elif [[ "${COMMENT}" == *"keep_fork"* ]]; then
+            STRATEGY=keep_fork
           fi
 
           chmod +x automation/github/update-fork.sh
-          automation/github/update-fork.sh --URL ${{ steps.fetch_remote_url.outputs.pr_remote_url }} --USER WhiteJaeger --FORCE $FORCE --AUTH "$AUTH_TOKEN"
+          automation/github/update-fork.sh --URL ${{ steps.fetch_remote_url.outputs.pr_remote_url }} --USER WhiteJaeger --STRATEGY $STRATEGY --AUTH "$AUTH_TOKEN"
 
       - name: Report on update
         uses: actions/github-script@v3
