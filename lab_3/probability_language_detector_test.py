@@ -67,22 +67,22 @@ I wish I thought What Jolly Fun'''.lower()
 
         actual_bi_grams = detector.detect(profile_unk, 5, (2,))
         self.assertEqual(len(actual_bi_grams), 2)
-        self.assertAlmostEqual(actual_bi_grams[('en', 2)], -6.516977891961313, 5)
+        self.assertAlmostEqual(actual_bi_grams[('en', 2)], -6.568706927023317, 5)
         self.assertAlmostEqual(actual_bi_grams[('de', 2)], -9.608814432895493, 5)
 
         actual_three_grams = detector.detect(profile_unk, 5, (3,))
         self.assertEqual(len(actual_three_grams), 2)
-        self.assertAlmostEqual(actual_three_grams[('en', 3)], -1.1451323043030026, 5)
+        self.assertAlmostEqual(actual_three_grams[('en', 3)], -1.0033021088637848, 5)
         self.assertAlmostEqual(actual_three_grams[('de', 3)], 0.0, 5)
 
         actual_three_grams_less_k = detector.detect(profile_unk, 3, (3,))
         self.assertEqual(len(actual_three_grams_less_k), 2)
-        self.assertAlmostEqual(actual_three_grams_less_k[('en', 3)], -1.1451323043030026, 5)
+        self.assertAlmostEqual(actual_three_grams_less_k[('en', 3)], -1.0033021088637848, 5)
         self.assertAlmostEqual(actual_three_grams_less_k[('de', 3)], 0.0, 5)
 
         actual_multi = detector.detect(profile_unk, 4, (1, 2, 3))
         self.assertEqual(len(actual_multi), 6)
-        self.assertAlmostEqual(actual_multi[('en', 1)], -9.618696814540112, 5)
+        self.assertAlmostEqual(actual_multi[('en', 1)], -9.674308785927618, 5)
         self.assertAlmostEqual(actual_multi[('de', 1)], -9.392476840786713, 5)
 
     def test_bad_input(self):

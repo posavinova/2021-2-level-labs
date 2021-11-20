@@ -61,9 +61,9 @@ I wish I thought What Jolly Fun'''.lower()
         profile_unk = LanguageProfile(storage, 'unk')
         profile_unk.create_from_tokens(encoded_unk, (2, 3))
 
-        self.assertAlmostEqual(calculate_probability(profile_unk, profile_en, 3, 2), -3.364241869597656, 5)
+        self.assertAlmostEqual(calculate_probability(profile_unk, profile_en, 3, 2), -3.295342916871046, 5)
         self.assertAlmostEqual(calculate_probability(profile_unk, profile_de, 3, 2), -6.174827228410347, 5)
-        self.assertAlmostEqual(calculate_probability(profile_unk, profile_en, 5, 2), -6.516977891961313, 5)
+        self.assertAlmostEqual(calculate_probability(profile_unk, profile_en, 5, 2), -6.568706927023317, 5)
         self.assertAlmostEqual(calculate_probability(profile_unk, profile_de, 5, 2), -9.608814432895493, 5)
 
     def test_bad_input(self):

@@ -26,6 +26,64 @@ class TokenizeBySentenceTest(unittest.TestCase):
         actual = tokenize_by_sentence(text)
         self.assertEqual(expected, actual)
 
+    def test_tokenize_by_sentence_multiline_text(self):
+        """
+            Tests that tokenize_by_sentence function
+                can handle ideal multi-line text
+            """
+        text = '''I wish I loved the Human Race.
+I wish I loved its silly face.
+I wish I liked the way it walks.
+I wish I liked the way it talks.
+And when I am introduced to one.
+I wish I thought What Jolly Fun.'''.lower()
+        expected = ((('_', 'i', '_'),
+                     ('_', 'w', 'i', 's', 'h', '_'),
+                     ('_', 'i', '_'),
+                     ('_', 'l', 'o', 'v', 'e', 'd', '_'),
+                     ('_', 't', 'h', 'e', '_'),
+                     ('_', 'h', 'u', 'm', 'a', 'n', '_'),
+                     ('_', 'r', 'a', 'c', 'e', '_')),
+                    (('_', 'i', '_'),
+                     ('_', 'w', 'i', 's', 'h', '_'),
+                     ('_', 'i', '_'),
+                     ('_', 'l', 'o', 'v', 'e', 'd', '_'),
+                     ('_', 'i', 't', 's', '_'),
+                     ('_', 's', 'i', 'l', 'l', 'y', '_'),
+                     ('_', 'f', 'a', 'c', 'e', '_')),
+                    (('_', 'i', '_'),
+                     ('_', 'w', 'i', 's', 'h', '_'),
+                     ('_', 'i', '_'),
+                     ('_', 'l', 'i', 'k', 'e', 'd', '_'),
+                     ('_', 't', 'h', 'e', '_'),
+                     ('_', 'w', 'a', 'y', '_'),
+                     ('_', 'i', 't', '_'),
+                     ('_', 'w', 'a', 'l', 'k', 's', '_')),
+                    (('_', 'i', '_'),
+                     ('_', 'w', 'i', 's', 'h', '_'),
+                     ('_', 'i', '_'),
+                     ('_', 'l', 'i', 'k', 'e', 'd', '_'),
+                     ('_', 't', 'h', 'e', '_'),
+                     ('_', 'w', 'a', 'y', '_'),
+                     ('_', 'i', 't', '_'),
+                     ('_', 't', 'a', 'l', 'k', 's', '_')),
+                    (('_', 'a', 'n', 'd', '_'),
+                     ('_', 'w', 'h', 'e', 'n', '_'),
+                     ('_', 'i', '_'),
+                     ('_', 'a', 'm', '_'),
+                     ('_', 'i', 'n', 't', 'r', 'o', 'd', 'u', 'c', 'e', 'd', '_'),
+                     ('_', 't', 'o', '_'),
+                     ('_', 'o', 'n', 'e', '_')),
+                    (('_', 'i', '_'),
+                     ('_', 'w', 'i', 's', 'h', '_'),
+                     ('_', 'i', '_'),
+                     ('_', 't', 'h', 'o', 'u', 'g', 'h', 't', '_'),
+                     ('_', 'w', 'h', 'a', 't', '_'),
+                     ('_', 'j', 'o', 'l', 'l', 'y', '_'),
+                     ('_', 'f', 'u', 'n', '_')))
+        actual = tokenize_by_sentence(text)
+        self.assertEqual(expected, actual)
+
     def test_tokenize_by_sentence_punctuation_marks(self):
         """
         Tests that tokenize_by_sentence function
