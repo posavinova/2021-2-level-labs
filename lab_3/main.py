@@ -271,11 +271,11 @@ class LanguageProfile:
         encoded_corpus = (((1, 2, 3, 1), (1, 4, 5, 1), (1, 2, 6, 7, 7, 8, 1)),)
         ngram_sizes = (2, 3)
 
-        self.tries --> [<__main__.NGramTrie object at 0x09DB9BB0>, 
+        self.tries --> [<__main__.NGramTrie object at 0x09DB9BB0>,
         <__main__.NGramTrie object at 0x09DB9A48>]
         self.n_words --> [11, 9]
         self.tries[0].n_grams --> (
-        (((1, 2), (2, 3), (3, 1)), ((1, 4), (4, 5), (5, 1)), 
+        (((1, 2), (2, 3), (3, 1)), ((1, 4), (4, 5), (5, 1)),
         ((1, 2), (2, 6), (6, 7), (7, 7), (7, 8), (8, 1))),
         )
         """
@@ -396,10 +396,10 @@ def calculate_distance(unknown_profile: LanguageProfile, known_profile: Language
     :param k: number of frequent N-grams to take into consideration
     :param trie_level: N-gram sizes to use in comparison
     :return: a distance
-    Например, первый набор N-грамм для неизвестного профиля - 
+    Например, первый набор N-грамм для неизвестного профиля -
     first_n_grams = ((1, 2), (4, 5), (2, 3)),
     второй набор N-грамм для известного профиля – second_n_grams = ((1, 2), (2, 3), (4, 5)).
-    Расстояние для (1, 2) равно 0, так как индекс в первом наборе – 0, 
+    Расстояние для (1, 2) равно 0, так как индекс в первом наборе – 0,
     во втором – 0, |0 – 0| = 0.
     Расстояние для (4, 5) равно 1, расстояние для (2, 3) равно 1.
     Соответственно расстояние между наборами равно 2.
@@ -460,8 +460,8 @@ class LanguageDetector:
         lang_distance = {}
         for lang_name, lang_profile in self.language_profiles.items():
             distance = calculate_distance(
-                unknown_profile, 
-                lang_profile, k, 
+                unknown_profile,
+                lang_profile, k,
                 trie_levels[0]
             )
             lang_distance[lang_name] = distance
@@ -488,15 +488,15 @@ class ProbabilityLanguageDetector(LanguageDetector):
     """
 
     def detect(
-            self, unknown_profile: LanguageProfile, 
-            k: int, 
+            self, unknown_profile: LanguageProfile,
+            k: int,
             trie_levels: tuple) -> Dict[Tuple[str, int], int or float] or int:
         """
         Detects the language of an unknown profile and its probability score
         :param unknown_profile: an instance of LanguageDetector
         :param k: a number of the most common n-grams
         :param trie_levels: N-gram size
-        :return: sorted language labels with corresponding ngram size and 
+        :return: sorted language labels with corresponding ngram size and
         their prob scores if input is correct, otherwise -1
         """
         pass
