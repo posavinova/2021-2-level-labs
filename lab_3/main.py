@@ -27,8 +27,11 @@ def tokenize_by_sentence(text: str) -> tuple:
                     'ü': 'ue',
                     'ä': 'ae',
                     'ß': 'ss'}
-    replaced = "".join([replacements[character] if character in replacements else character for character in text])
-    sentences = re.split('[.!?]\s*', replaced)
+    replaced = "".join(
+        [replacements[character] if character in replacements 
+         else character for character in text]
+    )
+    sentences = re.split(r'[.!?]\s*', replaced)
     list_letters = []
     for sentence in sentences:
         list_tokens = re.sub('[^\n a-z]', '', sentence.lower()).split()
@@ -266,13 +269,16 @@ class LanguageProfile:
         encoded_corpus = (((1, 2, 3, 1), (1, 4, 5, 1), (1, 2, 6, 7, 7, 8, 1)),)
         ngram_sizes = (2, 3)
 
-        self.tries --> [<__main__.NGramTrie object at 0x09DB9BB0>, <__main__.NGramTrie object at 0x09DB9A48>]
+        self.tries --> [<__main__.NGramTrie object at 0x09DB9BB0>, 
+        <__main__.NGramTrie object at 0x09DB9A48>]
         self.n_words --> [11, 9]
         self.tries[0].n_grams --> (
-            (((1, 2), (2, 3), (3, 1)), ((1, 4), (4, 5), (5, 1)), ((1, 2), (2, 6), (6, 7), (7, 7), (7, 8), (8, 1))),
+            (((1, 2), (2, 3), (3, 1)), ((1, 4), (4, 5), (5, 1)), 
+            ((1, 2), (2, 6), (6, 7), (7, 7), (7, 8), (8, 1))),
         )
         """
-        if not isinstance(encoded_corpus, tuple) or not isinstance(ngram_sizes, tuple):
+        if (not isinstance(encoded_corpus, tuple) 
+                or not isinstance(ngram_sizes, tuple)):
             return 1
         for size in ngram_sizes:
             trie = NGramTrie(size, self.storage)
@@ -329,7 +335,10 @@ class LanguageProfile:
         profile_dict = {}
         for trie in self.tries:
             for n_gram, freq in trie.n_gram_frequencies.items():
-                decoded = ''.join([self.storage.get_letter_by_id(letter_id) for letter_id in n_gram])
+                decoded = ''.join(
+                    [self.storage.get_letter_by_id(letter_id) 
+                     for letter_id in n_gram]
+                )
                 freq_dict.update({decoded: freq})
         profile_dict['freq'] = freq_dict
         profile_dict['n_words'] = self.n_words
@@ -470,12 +479,14 @@ class ProbabilityLanguageDetector(LanguageDetector):
     Detects profile language using probabilities
     """
     def detect(self, unknown_profile: LanguageProfile, k: int, trie_levels: tuple) -> Dict[Tuple[
-                                                                                               str, int], int or float] or int:
+                                                                                               str, int],
+                                                                                           int or float] or int:
         """
         Detects the language of an unknown profile and its probability score
         :param unknown_profile: an instance of LanguageDetector
         :param k: a number of the most common n-grams
         :param trie_levels: N-gram size
-        :return: sorted language labels with corresponding ngram size and their prob scores if input is correct, otherwise -1
+        :return: sorted language labels with corresponding ngram size and 
+        their prob scores if input is correct, otherwise -1
         """
         pass
