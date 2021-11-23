@@ -28,7 +28,7 @@ def tokenize_by_sentence(text: str) -> tuple:
                     'ä': 'ae',
                     'ß': 'ss'}
     replaced = "".join(
-        [replacements[character] if character in replacements 
+        [replacements[character] if character in replacements
          else character for character in text]
     )
     sentences = re.split(r'[.!?]\s*', replaced)
@@ -151,6 +151,7 @@ class NGramTrie:
     """
     Stores and manages ngrams
     """
+
     def __init__(self, n: int, letter_storage: LetterStorage):
         self.size = n
         self.storage = letter_storage
@@ -252,6 +253,7 @@ class LanguageProfile:
     """
     Stores and manages language profile information
     """
+
     def __init__(self, letter_storage: LetterStorage, language_name: str):
         self.storage = letter_storage
         self.language = language_name
@@ -273,11 +275,11 @@ class LanguageProfile:
         <__main__.NGramTrie object at 0x09DB9A48>]
         self.n_words --> [11, 9]
         self.tries[0].n_grams --> (
-            (((1, 2), (2, 3), (3, 1)), ((1, 4), (4, 5), (5, 1)), 
-            ((1, 2), (2, 6), (6, 7), (7, 7), (7, 8), (8, 1))),
+        (((1, 2), (2, 3), (3, 1)), ((1, 4), (4, 5), (5, 1)), 
+        ((1, 2), (2, 6), (6, 7), (7, 7), (7, 8), (8, 1))),
         )
         """
-        if (not isinstance(encoded_corpus, tuple) 
+        if (not isinstance(encoded_corpus, tuple)
                 or not isinstance(ngram_sizes, tuple)):
             return 1
         for size in ngram_sizes:
@@ -336,7 +338,7 @@ class LanguageProfile:
         for trie in self.tries:
             for n_gram, freq in trie.n_gram_frequencies.items():
                 decoded = ''.join(
-                    [self.storage.get_letter_by_id(letter_id) 
+                    [self.storage.get_letter_by_id(letter_id)
                      for letter_id in n_gram]
                 )
                 freq_dict.update({decoded: freq})
@@ -394,9 +396,11 @@ def calculate_distance(unknown_profile: LanguageProfile, known_profile: Language
     :param k: number of frequent N-grams to take into consideration
     :param trie_level: N-gram sizes to use in comparison
     :return: a distance
-    Например, первый набор N-грамм для неизвестного профиля - first_n_grams = ((1, 2), (4, 5), (2, 3)),
+    Например, первый набор N-грамм для неизвестного профиля - 
+    first_n_grams = ((1, 2), (4, 5), (2, 3)),
     второй набор N-грамм для известного профиля – second_n_grams = ((1, 2), (2, 3), (4, 5)).
-    Расстояние для (1, 2) равно 0, так как индекс в первом наборе – 0, во втором – 0, |0 – 0| = 0.
+    Расстояние для (1, 2) равно 0, так как индекс в первом наборе – 0, 
+    во втором – 0, |0 – 0| = 0.
     Расстояние для (4, 5) равно 1, расстояние для (2, 3) равно 1.
     Соответственно расстояние между наборами равно 2.
     """
@@ -455,7 +459,11 @@ class LanguageDetector:
             return -1
         lang_distance = {}
         for lang_name, lang_profile in self.language_profiles.items():
-            distance = calculate_distance(unknown_profile, lang_profile, k, trie_levels[0])
+            distance = calculate_distance(
+                unknown_profile, 
+                lang_profile, k, 
+                trie_levels[0]
+            )
             lang_distance[lang_name] = distance
         return lang_distance
 
@@ -478,9 +486,11 @@ class ProbabilityLanguageDetector(LanguageDetector):
     """
     Detects profile language using probabilities
     """
-    def detect(self, unknown_profile: LanguageProfile, k: int, trie_levels: tuple) -> Dict[Tuple[
-                                                                                               str, int],
-                                                                                           int or float] or int:
+
+    def detect(
+            self, unknown_profile: LanguageProfile, 
+            k: int, 
+            trie_levels: tuple) -> Dict[Tuple[str, int], int or float] or int:
         """
         Detects the language of an unknown profile and its probability score
         :param unknown_profile: an instance of LanguageDetector
