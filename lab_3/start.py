@@ -3,85 +3,132 @@ Language detection starter
 """
 
 import os
-from lab_3.main import LetterStorage, LanguageProfile, LanguageDetector
-from lab_3.main import encode_corpus, tokenize_by_sentence, calculate_distance
-
+from lab_3.main import (tokenize_by_sentence,
+                        LetterStorage,
+                        encode_corpus,
+                        LanguageProfile,
+                        calculate_distance,
+                        LanguageDetector,
+                        ProbabilityLanguageDetector)
 
 PATH_TO_LAB_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 if __name__ == '__main__':
-    ENG_SAMPLE = """Helium is the byproduct of millennia of radioactive
-    decay from the elements thorium and uranium."""
-    GERMAN_SAMPLE = """Zwei Begriffe, die nicht unbedingt zueinander passen,
-    am Arbeitsplatz schon mal gar nicht."""
+    ENG_SAMPLE = "Helium is the byproduct of millennia of radioactive decay " \
+                 "from the elements thorium and uranium."
+    GERMAN_SAMPLE = "Zwei Begriffe, die nicht unbedingt zueinander passen, " \
+                    "am Arbeitsplatz schon mal gar nicht."
     UNKNOWN_SAMPLE = "Helium is material."
-    SECRET_SAMPLE = """ Некој е болен и тој не е слободен.
-    Dлетува гол во дупка од мраз. 
+    SECRET_SAMPLE = """ Некој е болен и тој не е слободен. Dлетува гол во дупка од мраз.
     И пее, а плаче од болка. Дали е ова контраст, можеби – живот?"""
 
-    tokenized_en = tokenize_by_sentence(ENG_SAMPLE)
-    tokenized_de = tokenize_by_sentence(GERMAN_SAMPLE)
-    tokenized_unk = tokenize_by_sentence(UNKNOWN_SAMPLE)
+    # use tokenize_by_sentence
+    # score 6-8
+    eng_text = tokenize_by_sentence(ENG_SAMPLE)
+    de_text = tokenize_by_sentence(GERMAN_SAMPLE)
+    unk_text = tokenize_by_sentence(UNKNOWN_SAMPLE)
+    # score 10 secret_text
+    secret_text = tokenize_by_sentence(SECRET_SAMPLE)
 
+    # use method update in LetterStorage
+    # score 6-8
     storage = LetterStorage()
-    storage.update(tokenized_en)
-    storage.update(tokenized_de)
-    storage.update(tokenized_unk)
+    storage.update(eng_text)
+    storage.update(de_text)
+    storage.update(unk_text)
+    # score 10
+    storage.update(secret_text)
 
-    encoded_en = encode_corpus(storage, tokenized_en)
-    encoded_de = encode_corpus(storage, tokenized_de)
-    encoded_unk = encode_corpus(storage, tokenized_unk)
+    # use function encode_corpus
+    # score 6-8
+    encoded_eng_text = encode_corpus(storage, eng_text)
+    encoded_de_text = encode_corpus(storage, de_text)
+    encoded_unk_text = encode_corpus(storage, unk_text)
+    # score 10
+    encoded_secret_text = encode_corpus(storage, secret_text)
 
-    # score 6, params: k = 5, trie_level = 2
-    # predict UNKNOWN_SAMPLE
+    # use LanguageProfile
+    # score 6-8
+    eng_profile = LanguageProfile(storage, 'en')
+    de_profile = LanguageProfile(storage, 'de')
+    unk_profile = LanguageProfile(storage, 'unk')
+    # score 10
+    secret_profile = LanguageProfile(storage, 'secret')
 
-    en_profile_6 = LanguageProfile(storage, 'en')
-    de_profile_6 = LanguageProfile(storage, 'de')
-    unknown_profile_6 = LanguageProfile(storage, 'unk')
 
-    en_profile_6.create_from_tokens(encoded_en, (5, 2))
-    de_profile_6.create_from_tokens(encoded_de, (5, 2))
-    unknown_profile_6.create_from_tokens(encoded_unk, (5, 2))
+    def score_6(k=5, trie_level=2):
+        """
+        score 6, params: k = 5, trie_level = 2
+        predict UNKNOWN_SAMPLE
+        EXPECTED_DISTANCE_TO_EN_DE_PROFILES = 17, 25
+        """
+        # use create_from_tokens
+        eng_profile.create_from_tokens(encoded_eng_text, (trie_level,))
+        de_profile.create_from_tokens(encoded_de_text, (trie_level,))
+        unk_profile.create_from_tokens(encoded_unk_text, (trie_level,))
 
-    en_distance_6 = calculate_distance(unknown_profile_6, en_profile_6, 5, 2)
-    de_distance_6 = calculate_distance(unknown_profile_6, de_profile_6, 5, 2)
-    RESULT_6 = en_distance_6, de_distance_6
-    print(RESULT_6)
+        prediction_dist_eng = calculate_distance(unk_profile, eng_profile, k, trie_level)
+        prediction_dist_de = calculate_distance(unk_profile, de_profile, k, trie_level)
+
+        return prediction_dist_eng, prediction_dist_de
+
+
+    def score_8(k=5, trie_level=3):
+        """
+        score 8, params: k = 5, trie_level = 3
+        predict UNKNOWN_SAMPLE
+        EXPECTED_SCORE = {'en': 24, 'de': 25}
+        """
+        # use create_from_tokens
+        eng_profile.create_from_tokens(encoded_eng_text, (trie_level,))
+        de_profile.create_from_tokens(encoded_de_text, (trie_level,))
+        unk_profile.create_from_tokens(encoded_unk_text, (trie_level,))
+
+        # use method register_language in LanguageDetector
+        detector = LanguageDetector()
+
+        detector.register_language(eng_profile)
+        detector.register_language(de_profile)
+
+        unk_profile.save('unk_profile.json')
+        unk_profile.open('unk_profile.json')
+
+        return detector.detect(unk_profile, k, (trie_level,))
+
+    def score_10(k=1000, trie_levels=(2,)):
+        """
+        score 10, params: k = 1000, trie_levels = (2,)
+        predict SECRET_SAMPLE
+        EXPECTED_LANGUAGE = ?
+        EXPECTED_MIN_DISTANCE = ?
+        """
+        # use create_from_tokens
+        secret_profile.create_from_tokens(encoded_secret_text, trie_levels)
+
+        detector = ProbabilityLanguageDetector()
+
+        for file_name in os.listdir(os.path.join(PATH_TO_LAB_FOLDER, 'profiles')):
+            profile = LanguageProfile(storage, file_name)
+            profile.open(os.path.join(PATH_TO_LAB_FOLDER, 'profiles', file_name))
+            detector.register_language(profile)
+
+        probabilities = detector.detect(secret_profile, k, trie_levels)
+        predicted_language = min(probabilities, key=probabilities.get)
+
+        return predicted_language[0], probabilities[predicted_language]
+
+    ACTUAL_6 = score_6()
     EXPECTED_DISTANCE_TO_EN_DE_PROFILES = 17, 25
+    assert ACTUAL_6 == EXPECTED_DISTANCE_TO_EN_DE_PROFILES, 'Detection not working'
 
-    # score 8, k = 5, trie_level = 3
-    # predict UNKNOWN_SAMPLE
-
-    en_profile_8 = LanguageProfile(storage, 'en')
-    de_profile_8 = LanguageProfile(storage, 'de')
-    unknown_profile_8 = LanguageProfile(storage, 'unk')
-
-    en_profile_8.create_from_tokens(encoded_en, (5, 3))
-    de_profile_8.create_from_tokens(encoded_de, (5, 3))
-    unknown_profile_8.create_from_tokens(encoded_unk, (5, 3))
-
-    calculate_distance(unknown_profile_8, en_profile_8, 5, 3)
-    calculate_distance(unknown_profile_8, de_profile_8, 5, 3)
-
-    unknown_profile_8.save('unknown_profile.json')
-    profile_unk = LanguageProfile(storage, 'unk')
-    profile_unk.open('unknown_profile.json')
-
-    detector = LanguageDetector()
-
-    detector.register_language(en_profile_8)
-    detector.register_language(de_profile_8)
-
-    RESULT_8 = detector.detect(profile_unk, 5, (3,))
-    print(RESULT_8)
+    ACTUAL_8 = score_8()
     EXPECTED_SCORE = {'en': 24, 'de': 25}
+    assert ACTUAL_8 == EXPECTED_SCORE, 'Detection not working'
 
-    # score 10, k = 1000, trie_levels = (2,)
-    # predict SECRET_SAMPLE
-    # print(detector.detect(unknown_profile, 1000, (2,)))
-    # EXPECTED_LANGUAGE = ?
-    # EXPECTED_MIN_DISTANCE = ?
+    EXPECTED_LANGUAGE = score_10()[0]
+    EXPECTED_MIN_DISTANCE = score_10()[1]
+    print(EXPECTED_LANGUAGE, EXPECTED_MIN_DISTANCE)
 
+    # RESULT = ''
     # DO NOT REMOVE NEXT LINE - KEEP IT INTENTIONALLY LAST
-    assert RESULT_6 == EXPECTED_DISTANCE_TO_EN_DE_PROFILES, 'Detection not working'
-    assert RESULT_8 == EXPECTED_SCORE, 'Detection not working'
+    # assert RESULT, 'Detection not working'

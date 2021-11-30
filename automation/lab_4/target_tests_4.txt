@@ -1,0 +1,5 @@
+tokenize_by_letters_test.py
+storage_test.py
+letter_storage_test.py
+encode_corpus_test.py
+decode_sentence_test.py
