@@ -33,10 +33,10 @@ I wish I thought What Jolly Fun'''.lower()
         profile = LanguageProfile(storage, 'en')
         profile.create_from_tokens(encoded, (2,))
         text_generator = NGramTextGenerator(profile)
-        generated_sentence = text_generator.generate_sentence((1,), 8)
+        generated_sentence = text_generator.generate_sentence((1,), 6)
         decoded = decode_sentence(storage, generated_sentence)
         actual = translate_sentence_to_plain_text(decoded)
-        expected = 'I wish the loved fan acendumay hucs rallywam.'
+        expected = 'I wish the loved fan acendumay.'
         self.assertEqual(expected, actual)
 
     def test_incorrect_input(self):

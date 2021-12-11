@@ -100,7 +100,7 @@ class NGramTextGeneratorTest(unittest.TestCase):
         profile.create_from_tokens(encoded, (2,))
         text_generator = NGramTextGenerator(profile)
         actual = text_generator._generate_word((2,), 1)
-        expected = (2, 3, -1)
+        expected = (2, 1)
         self.assertEqual(actual, expected)
 
     def test_one_letter(self):
@@ -134,7 +134,7 @@ class NGramTextGeneratorTest(unittest.TestCase):
         profile.create_from_tokens(encoded, (2,))
         text_generator = NGramTextGenerator(profile)
         actual = text_generator._generate_letter((100,))
-        expected = 5
+        expected = 12
         self.assertEqual(actual, expected)
 
     def test_used_ngrams(self):
