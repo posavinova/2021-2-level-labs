@@ -25,7 +25,6 @@ if __name__ == '__main__':
         unknown_text = file_to_read_unk.read()
 
     EXPECTED = 'en'
-    RESULT = ''
     TOP_N = 7
     unknown_profile = main.create_language_profile('unknown_text', unknown_text, [])
 
