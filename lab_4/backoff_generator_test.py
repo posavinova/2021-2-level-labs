@@ -57,7 +57,7 @@ I wish I thought What Jolly Fun'''.lower()
         profile.create_from_tokens(encoded, (1, 2, 3))
         text_generator = BackOffGenerator(profile)
         actual = text_generator.generate_sentence((2, 3), 4)
-        expected = ((2, 3, 2, 4, 5, 1), (1, 2, 1), (1, 3, 2, 10, 1), (1, 11, 5, 9, 1))
+        expected = ((2, 3, 2, 4, 5, 1), (1, 2, 1), (1, 3, 2, 1), (1, 11, 5, 9, 1))
         self.assertEqual(actual, expected)
 
     def test_incorrect_input(self):
