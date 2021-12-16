@@ -40,7 +40,7 @@ if __name__ == '__main__':
               'r', encoding='utf-8') as file_to_read:
         UNKNOWN_SAMPLES = file_to_read.read().split('[TEXT]')[1:]
 
-    EXPECTED = ['de', 'eng', 'lat']
+    EXPECTED = ['de', 'lat', 'eng']
     stop_words = []
     corpus = []
     language_labels = []

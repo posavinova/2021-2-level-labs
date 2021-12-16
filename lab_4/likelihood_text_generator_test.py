@@ -31,7 +31,7 @@ I wish I thought What Jolly Fun'''.lower()
         encoded = encode_corpus(storage, tokenized)
 
         profile = LanguageProfile(storage, 'en')
-        profile.create_from_tokens(encoded, (2, 3))
+        profile.create_from_tokens(encoded, (1, 2, 3))  # add unigrams
         text_generator = LikelihoodBasedTextGenerator(profile)
         actual = text_generator.generate_sentence((4,), 4)
         expected = ((4, 5, 1), (1, 2, 1), (1, 2, 1), (1, 2, 1))
@@ -49,7 +49,7 @@ I wish I thought What Jolly Fun'''.lower()
         encoded = encode_corpus(storage, tokenized)
 
         profile = LanguageProfile(storage, 'en')
-        profile.create_from_tokens(encoded, (2,))
+        profile.create_from_tokens(encoded, (1, 2,))  # add unigrams
         text_generator = LikelihoodBasedTextGenerator(profile)
         bad_inputs = [[123], LanguageProfile, profile, None, 'none', ()]
         for bad_input in bad_inputs:
@@ -79,8 +79,8 @@ I wish I thought What Jolly Fun'''.lower()
         encoded = encode_corpus(storage, tokenized)
 
         profile = LanguageProfile(storage, 'en')
-        profile.create_from_tokens(encoded, (2, 3))
+        profile.create_from_tokens(encoded, (1, 2, 3))  # add unigrams - the first student comment
         text_generator = LikelihoodBasedTextGenerator(profile)
         actual = text_generator.generate_sentence((4, 20), 4)
-        expected = ((4, 20, 1), (1,), (1,), (1,))
+        expected = ((4, 20, 1), (1, 2, 1), (1, 2, 1), (1, 2, 1))
         self.assertEqual(actual, expected)

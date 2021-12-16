@@ -1,7 +1,30 @@
-# dev tools
+# Dev tools
 *.idea
 .vscode
-venv
 .DS_Store
+
+# Environments
+venv
+
+# Data
 lab_3/profiles/
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
