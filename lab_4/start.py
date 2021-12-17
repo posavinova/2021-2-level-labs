@@ -29,10 +29,8 @@ if __name__ == "__main__":
     print(list(storage.storage.items())[:5])
     print(list(storage.storage.items())[-5:])
 
-    print("***")
-
     # score 6
-    profile = LanguageProfile(storage, "ref")
+    profile = LanguageProfile(storage, "idk")
     profile.create_from_tokens(
         encode_corpus(storage, corpus),
         (
@@ -44,48 +42,28 @@ if __name__ == "__main__":
     for length in range(5, 11):
         print(generator.generate_decoded_sentence((1,), length))
 
-    print("***")
-
     # score 8
     generator = LikelihoodBasedTextGenerator(profile)
     for length in range(5, 11):
-        print(generator.generate_decoded_sentence((4,), length))
-
-    print("***")
+        print(generator.generate_decoded_sentence((1,), length))
 
     # score 10
-    # First public language
-    profile_1 = PublicLanguageProfile(LetterStorage(), "fi")
-    profile_1.open(os.path.join(PATH_TO_LAB_FOLDER, "fi"))
+    profile = PublicLanguageProfile(LetterStorage(), "ne")
+    profile.open(os.path.join(PATH_TO_LAB_FOLDER, "ne"))
 
-    generation_1 = []
+    generation = []
     for generator in [
-        NGramTextGenerator(profile_1),
-        LikelihoodBasedTextGenerator(profile_1),
-        BackOffGenerator(profile_1),
+        NGramTextGenerator(profile),
+        LikelihoodBasedTextGenerator(profile),
+        BackOffGenerator(profile),
     ]:
-        generation_1.append(
+        generation.append(
             generator.generate_decoded_sentence(
-                (profile_1.storage.get_special_token_id(),), 5
+                (profile.storage.get_special_token_id(),), 5
             )
         )
-    # print("\n".join(generation_1))
+    print(" ".join(generation))
 
-    # print("***")
-
-    # Second public language
-    profile_2 = PublicLanguageProfile(LetterStorage(), "ne")
-    profile_2.open(os.path.join(PATH_TO_LAB_FOLDER, "ne"))
-
-    generation_2 = []
-    for generator in [
-        NGramTextGenerator(profile_2),
-        LikelihoodBasedTextGenerator(profile_2),
-        BackOffGenerator(profile_2),
-    ]:
-        generation_2.append(
-            generator.generate_decoded_sentence(
-                (profile_2.storage.get_special_token_id(),), 5
-            )
-        )
-    # print("\n".join(generation_2))
+    RESULT = generation
+    # DO NOT REMOVE NEXT LINE - KEEP IT INTENTIONALLY LAST
+    assert RESULT == generation, "Detection not working"
