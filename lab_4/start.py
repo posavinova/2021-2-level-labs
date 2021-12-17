@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # score 8
     generator = LikelihoodBasedTextGenerator(profile)
     for length in range(5, 11):
-        print(generator.generate_decoded_sentence((1,), length))
+        print(generator.generate_decoded_sentence((4,), length))
 
     print("***")
 
