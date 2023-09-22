@@ -15,13 +15,7 @@ class Vehicle:
 
 
 # Car
-    # Attribute:
-        # max_speed
-        # colour
-        # fuel
-    # Methods:
-        # move
-        # stay
+stay
 
 
 class Car(Vehicle):
